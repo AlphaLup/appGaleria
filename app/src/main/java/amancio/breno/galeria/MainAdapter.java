@@ -1,5 +1,6 @@
 package amancio.breno.galeria;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,11 +28,11 @@ public class MainAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         ImageView imPhoto = holder.itemView.findViewById(R.id.imItem);
         int w = (int) mainActivity.getResources().getDimension(R.dimen.itemWidth);
         int h = (int) mainActivity.getResources().getDimension(R.dimen.itemHeight);
-        Bitmap bitmap = Util.getBitmap(photos.get(position), w, h);
+        Bitmap bitmap = Utils.getBitmap(photos.get(position), w, h);
         imPhoto.setImageBitmap(bitmap);
         imPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,6 +45,6 @@ public class MainAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return 0;
+        return photos.size();
     }
 }
