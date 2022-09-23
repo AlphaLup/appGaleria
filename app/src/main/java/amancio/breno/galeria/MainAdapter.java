@@ -2,6 +2,7 @@ package amancio.breno.galeria;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -11,12 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+
 public class MainAdapter extends RecyclerView.Adapter {
 
     MainActivity mainActivity;
     List<String> photos;
-
-    public MainAdapter(MainActivity mainActivity, List<String> photos) {
+    public MainAdapter (MainActivity mainActivity, List<String> photos) {
         this.mainActivity = mainActivity;
         this.photos = photos;
     }
@@ -24,7 +25,9 @@ public class MainAdapter extends RecyclerView.Adapter {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        LayoutInflater inflater = LayoutInflater.from(mainActivity);
+        View v = inflater.inflate(R.layout.list_item, parent, false);
+        return new MyViewHolder(v);
     }
 
     @Override
@@ -41,6 +44,7 @@ public class MainAdapter extends RecyclerView.Adapter {
             }
         });
     }
+
 
 
     @Override

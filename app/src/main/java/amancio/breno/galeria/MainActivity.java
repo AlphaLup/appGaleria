@@ -39,20 +39,17 @@ public class MainActivity extends AppCompatActivity {
     static int RESULT_TAKE_PICTURE = 1;
     static int RESULT_REQUEST_PERMISSION = 2;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Define a toolbar para ser a actionbar padrão
-        Toolbar toolbar_main = findViewById(R.id.tbMain);
-        setSupportActionBar(toolbar_main);
+        Toolbar toolbar = findViewById(R.id.tbMain);
+        setSupportActionBar(toolbar);
 
-        setContentView(R.layout.activity_main);
         File dir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File[] files = dir.listFiles();
-        for(int i = 0; i < files.length; i++) {
+        for (int i = 0; i < files.length; i++) {
             photos.add(files[i].getAbsolutePath());
         }
 
@@ -74,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
     private void dispatchTakePictureIntent() {
         File f = null;
         try {
@@ -85,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
         currentPhotoPath = f.getAbsolutePath();
 
-        if(f != null) {
+        if (f != null) {
             Uri fUri = FileProvider.getUriForFile(MainActivity.this, "amancio.breno.galeria.fileprovider", f);
             Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             i.putExtra(MediaStore.EXTRA_OUTPUT, fUri);
@@ -104,12 +102,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == RESULT_TAKE_PICTURE) {
-            if(resultCode == Activity.RESULT_OK) {
+        if (requestCode == RESULT_TAKE_PICTURE) {
+            if (resultCode == Activity.RESULT_OK) {
                 photos.add(currentPhotoPath);
-                mainAdapter.notifyItemInserted(photos.size()-1);
-            }
-            else {
+                mainAdapter.notifyItemInserted(photos.size() - 1);
+            } else {
                 File f = new File(currentPhotoPath);
                 f.delete();
             }
@@ -117,21 +114,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Cria as opções de menudefinidas no arquivo de menu setado
         super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_activity_tb, menu);
         return true;
     }
 
-    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        // pega o id de um item e vai conferir se é igual ao da camera ou não
         switch (item.getItemId()) {
             case R.id.opCamera:
-                //caso seja, chamará o método definido
                 dispatchTakePictureIntent();
                 return true;
             default:
@@ -148,21 +140,21 @@ public class MainActivity extends AppCompatActivity {
     private void checkForPermissions(List<String> permissions) {
         List<String> permissionsNotGranted = new ArrayList<>();
 
-        for(String permission : permissions) {
-            if( !hasPermission(permission)) {
+        for (String permission : permissions) {
+            if (!hasPermission(permission)) {
                 permissionsNotGranted.add(permission);
             }
         }
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if(permissionsNotGranted.size() > 0) {
-                requestPermissions(permissionsNotGranted.toArray(new String[permissionsNotGranted.size()]),RESULT_REQUEST_PERMISSION);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (permissionsNotGranted.size() > 0) {
+                requestPermissions(permissionsNotGranted.toArray(new String[permissionsNotGranted.size()]), RESULT_REQUEST_PERMISSION);
             }
         }
     }
 
     private boolean hasPermission(String permission) {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             return ActivityCompat.checkSelfPermission(MainActivity.this, permission) == PackageManager.PERMISSION_GRANTED;
         }
         return false;
@@ -173,20 +165,20 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         final List<String> permissionsRejected = new ArrayList<>();
-        if(requestCode == RESULT_REQUEST_PERMISSION) {
+        if (requestCode == RESULT_REQUEST_PERMISSION) {
 
-            for(String permission : permissions) {
-                if(!hasPermission(permission)) {
+            for (String permission : permissions) {
+                if (!hasPermission(permission)) {
                     permissionsRejected.add(permission);
                 }
             }
         }
 
-        if(permissionsRejected.size() > 0) {
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if(shouldShowRequestPermissionRationale(permissionsRejected.get(0))) {
+        if (permissionsRejected.size() > 0) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (shouldShowRequestPermissionRationale(permissionsRejected.get(0))) {
                     new AlertDialog.Builder(MainActivity.this).
-                            setMessage("Me dê").
+                            setMessage("me dê").
                             setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {

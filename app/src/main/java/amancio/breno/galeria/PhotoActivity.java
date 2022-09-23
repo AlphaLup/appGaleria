@@ -42,21 +42,14 @@ public class PhotoActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Cria as opções de menudefinidas no arquivo de menu setado
+    public boolean onCreateOptionsMenu (Menu menu) {
         super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_activity_tb, menu);
+        inflater.inflate(R.menu.photo_activity_tb, menu);
         return true;
     }
-
-
-    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        //verifica se o id é igual ao compartilhar
         switch (item.getItemId()) {
-            // caso for, chama o método definido
             case R.id.opShare:
                 sharePhoto();
                 return true;
@@ -73,6 +66,5 @@ public class PhotoActivity extends AppCompatActivity {
         i.setType("image/jpeg");
         startActivity(i);
     }
-
 
 }
